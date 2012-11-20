@@ -4,17 +4,17 @@ package GoBitFields
 import (
     "errors"
     "math"
-    "reflect"
 )
 
 /* CreateField
  * Create a field with name "fname" of length "bitlen" within BitField.
  * Store the type "typeof" within our field map.
  */
-func (BitField b) CreateField(fname string, bitlen uint, typeof reflect.Type) {
+func (BitField b) CreateField(fname string, bitlen uint, typeof string) {
     // Add the field to the field map
     if _, present := b.fields[fname]; !present {
-        b.fields[fname] = []interface{} { b.length, bitlen, typeof }
+        b.fields[fname] = []int { b.length, bitlen }
+        b.ftype[fname] = 
     } else {
         return errors.New("Field already exists")
     }
@@ -39,11 +39,11 @@ func (BitField b) CreateField(fname string, bitlen uint, typeof reflect.Type) {
 func (BitField b) SetField(fname string, fdata interface{}) err error {
     fpos = b.field[fname][0]
     flen = b.field[fname][1]
-    ftype = b.field[fname][2]
+    ftype = b.ftype[fname]
+    // TODO: this
 
-    if reflect.TypeOf(fdata).Name() != ftype {
-        return errors.New("Data Type Mismatch")
-    }
+    // completed successfully
+    return nil
 }
 
 /* SetFieldUInt4
@@ -52,9 +52,22 @@ func (BitField b) SetField(fname string, fdata interface{}) err error {
 func (BitField b) SetFieldUInt4(fname string, fdata uint8) {
     fpos = b.field[fname][0]
     flen = b.field[fname][1]
-    ftype = b.field[fname][2]
+    ftype = b.ftype[fname]
+    // TODO: this
 
-    if ftype != "uint4" {
-        return errors.New("Field Data Type Not UInt4")
-    }
+    // completed successfully
+    return nil
 }
+
+/* SetFieldBit
+ * Same as SetField, but setting a single bit field
+ */
+ func (BitField b) SetFieldBit(fname string, fdata uint8) {
+    fpos = b.field[fname][0]
+    flen = b.field[fname][1]
+    ftype = b.ftype[fname]
+    // TODO: this
+
+    // completed successfully
+    return nil
+ }

@@ -18,3 +18,4 @@ Lots
 
 ### Other useful functions ###
 * [-] SetFieldUInt4(string, uint8) error
+* [-] SetFieldBit(string, uint8) error
