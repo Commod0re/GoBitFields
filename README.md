@@ -3,6 +3,8 @@ GoBitFields
 
 golang bit field package
 
+WARNING: This doesn't work yet
+
 ## TODO ##
 Lots
 
