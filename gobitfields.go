@@ -14,7 +14,7 @@ func (BitField b) CreateField(fname string, bitlen uint, typeof string) {
     // Add the field to the field map
     if _, present := b.fields[fname]; !present {
         b.fields[fname] = []int { b.length, bitlen }
-        b.ftype[fname] = 
+        b.ftype[fname] = typeof
     } else {
         return errors.New("Field already exists")
     }
