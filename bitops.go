@@ -115,6 +115,7 @@ func setdata(blob []byte, data interface{}, mask []byte, sbyt int, ebyt int, off
     // first convert data to []byte
     switch {
     // integers
+    // TODO: there might be a better way of doing this
     case type == "int4": // this is not a real type
         bdata := byte( int(data & 15) ) // truncates to 4 bits
 
