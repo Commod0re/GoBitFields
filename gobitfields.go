@@ -30,7 +30,7 @@ func (BitField b) CreateField(fname string, bitlen uint, typeof string) {
     b.data = temp
 
     // Completed successfully
-    return nil
+    return
 }
 
 /* SetField
@@ -43,7 +43,7 @@ func (BitField b) SetField(fname string, fdata interface{}) err error {
     // TODO: this
 
     // completed successfully
-    return nil
+    return
 }
 
 /* SetFieldUInt4
@@ -56,7 +56,20 @@ func (BitField b) SetFieldUInt4(fname string, fdata uint8) {
     // TODO: this
 
     // completed successfully
-    return nil
+    return
+}
+
+/* SetFieldUInt24
+ * Same as SetField, but setting a nibble+byte (uint24) field
+ */
+func (BitField b) SetFieldUInt4(fname string, fdata uint32) {
+    fpos = b.field[fname][0]
+    flen = b.field[fname][1]
+    ftype = b.ftype[fname]
+    // TODO: this
+
+    //completed successfully
+    return
 }
 
 /* SetFieldBit
@@ -69,5 +82,5 @@ func (BitField b) SetFieldUInt4(fname string, fdata uint8) {
     // TODO: this
 
     // completed successfully
-    return nil
+    return
  }
