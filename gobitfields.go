@@ -36,12 +36,12 @@ func (BitField b) CreateField(fname string, bitlen uint, typeof string) {
 /* SetField
  * Set field name "fname" to arbitrary data "fdata." Truncate fdata to fit within the field if necessary.
  */
-func (BitField b) SetField(fname string, fdata interface{}, ftype string) err error {
+func (BitField b) SetField(fname string, fdata interface{}) err error {
     fpos = b.field[fname][0]
     flen = b.field[fname][1]
     ftype = b.ftype[fname]
     // startbyte and endbyte
-    sbyt ebyt := locateField(fpos, flen)
+    sbyt, ebyt := locateField(fpos, flen)
     // left-side offset (for generating the mask)
     loff := fpos - (sbyt * 8)
     // generate the mask
@@ -52,5 +52,30 @@ func (BitField b) SetField(fname string, fdata interface{}, ftype string) err er
     b.data = setdata(b.data, fdata, mask, sbyt, ebyt, offset, ftype)
 
     // completed successfully
+    return
+}
+
+/* Field
+ * Read field name "fname" and return the data
+ */
+func (BitField b) Field(fname string) (data interface{}, err error) {
+    fpos = b.field[fname][0]
+    flen = b.field[fname][1]
+    ftype = b.ftype[fname]
+    /// startbyte and endbyte
+    sbyt, ebyt := locateField(fpos, flen)
+    // left-side offset (for generating the mask)
+    loff := fpos - (sbyt * 8)
+    // generate the mask
+    mask := mask(flen, loff)
+    // calculate the offset using the last byte of the mask
+    offset := getOffset(mask[len(mask) - 1])
+
+    // isolate the block of data we want
+    dblock := b.data[sbyt:ebyt]
+
+    // now mask off the data and retrieve the result
+    data := maskdata(dblock, mask, offset, ftype)
+
     return
 }

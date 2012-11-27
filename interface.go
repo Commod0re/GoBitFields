@@ -8,8 +8,9 @@ package GoBitFields
 type BitFielder interface {
     CreateField(string, uint, string) error
                         // Create a field of type field (int) bits long of a given type
-    SetField(string, interface{}, string) error
-    Field(string)       // Read a field by name
+    SetField(string, interface{}) error
+    Field(string) (interface{}, error)
+                        // Read a field by name
     ReadData([]byte)    // Read a byte array into our BitFielder
     Data() []byte, int  // Output our binary blob and its intended length
     Write([]byte) (int, error) 
