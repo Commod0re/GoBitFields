@@ -36,51 +36,21 @@ func (BitField b) CreateField(fname string, bitlen uint, typeof string) {
 /* SetField
  * Set field name "fname" to arbitrary data "fdata." Truncate fdata to fit within the field if necessary.
  */
-func (BitField b) SetField(fname string, fdata interface{}) err error {
+func (BitField b) SetField(fname string, fdata interface{}, ftype string) err error {
     fpos = b.field[fname][0]
     flen = b.field[fname][1]
     ftype = b.ftype[fname]
-    // TODO: this
+    // startbyte and endbyte
+    sbyt ebyt := locateField(fpos, flen)
+    // left-side offset (for generating the mask)
+    loff := fpos - (sbyt * 8)
+    // generate the mask
+    mask := mask(flen, loff)
+    // calculate the offset using the last byte of the mask
+    offset := getOffset(mask[len(mask) - 1])
+    // set the data
+    b.data = setdata(b.data, fdata, mask, sbyt, ebyt, offset, ftype)
 
     // completed successfully
     return
 }
-
-/* SetFieldUInt4
- * Same as SetField, but setting a nibble uint (uint4) field
- */
-func (BitField b) SetFieldUInt4(fname string, fdata uint8) {
-    fpos = b.field[fname][0]
-    flen = b.field[fname][1]
-    ftype = b.ftype[fname]
-    // TODO: this
-
-    // completed successfully
-    return
-}
-
-/* SetFieldUInt24
- * Same as SetField, but setting a nibble+byte (uint24) field
- */
-func (BitField b) SetFieldUInt4(fname string, fdata uint32) {
-    fpos = b.field[fname][0]
-    flen = b.field[fname][1]
-    ftype = b.ftype[fname]
-    // TODO: this
-
-    //completed successfully
-    return
-}
-
-/* SetFieldBit
- * Same as SetField, but setting a single bit field
- */
- func (BitField b) SetFieldBit(fname string, fdata uint8) {
-    fpos = b.field[fname][0]
-    flen = b.field[fname][1]
-    ftype = b.ftype[fname]
-    // TODO: this
-
-    // completed successfully
-    return
- }

@@ -70,6 +70,24 @@ func byteArrToBigInt(data []byte) num *big.Int {
     return
 }
 
+func getOffset(lastByte byte) offset int {
+    // TODO: there's probably a better way to do this
+    // but it's probably fast enough for now, as we'll be iterating 
+    // no more than 8 times per field and these should be fast ops
+    offset := 0
+
+    for i:= 0; i < 8; i++ {
+        if lastByte & 1 == 0 {
+            offset += 1
+            lastByte = lastByte >> 1
+        } else {
+            break
+        }
+    }
+
+    return
+}
+
 /* maskdata
  * Mask off the desired data, and return it in the format requested.
  * In this case, offset is how many bits after the field there are to the next byte boundary

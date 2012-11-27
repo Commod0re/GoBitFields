@@ -17,7 +17,3 @@ Lots
 * [ ] ReadData([]byte)
 * [ ] Data() []byte, int
 * [ ] Write([]byte) (int, error) 
-
-### Other useful functions ###
-* [-] SetFieldUInt4(string, uint8) error
-* [-] SetFieldBit(string, uint8) error
